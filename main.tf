@@ -40,6 +40,8 @@ resource "azurerm_linux_virtual_machine" "example" {
     azurerm_network_interface.example.id,
   ]
 
+  disable_password_authentication = false
+
   # admin_ssh_key {
   #   username   = "adminuser"
   #   public_key = file("~/.ssh/id_rsa.pub")
@@ -52,8 +54,8 @@ resource "azurerm_linux_virtual_machine" "example" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "UbuntuServer"
-    sku       = "22.04-LTS"
+    offer     = "0001-com-ubuntu-server-focal"
+    sku       = "20_04-LTS"
     version   = "latest"
   }
 }
