@@ -29,6 +29,15 @@ resource "azurerm_network_interface" "example" {
   }
 }
 
+locals {
+  custom_data = <<EOF
+    #!/bin/bash
+    apt-get update
+    apt-get -y dist-upgrade
+    apt install -y nginx
+    EOF
+}
+
 resource "azurerm_linux_virtual_machine" "example" {
   name                = "example-machine"
   resource_group_name = azurerm_resource_group.example.name
@@ -42,11 +51,6 @@ resource "azurerm_linux_virtual_machine" "example" {
 
   disable_password_authentication = false
 
-  # admin_ssh_key {
-  #   username   = "adminuser"
-  #   public_key = file("~/.ssh/id_rsa.pub")
-  # }
-
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
@@ -54,8 +58,8 @@ resource "azurerm_linux_virtual_machine" "example" {
 
   source_image_reference {
     publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-LTS"
+    offer     = "0001-com-ubuntu-server-jammy"
+    sku       = "22_04-lts-gen2"
     version   = "latest"
   }
 }
