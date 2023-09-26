@@ -93,9 +93,9 @@ resource "azurerm_subnet_network_security_group_association" "example" {
 locals {
   custom_data = <<EOF
     #!/bin/bash
-    apt-get update
-    apt-get -y dist-upgrade
-    apt install -y nginx
+    sudo apt-get update
+    sudo apt-get -y dist-upgrade
+    sudo apt install -y nginx
     EOF
 }
 
