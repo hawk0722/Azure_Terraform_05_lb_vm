@@ -90,14 +90,14 @@ resource "azurerm_subnet_network_security_group_association" "example" {
   network_security_group_id = azurerm_network_security_group.nsg.id
 }
 
-locals {
-  custom_data = <<EOF
-    #!/bin/bash
-    sudo apt-get update
-    sudo apt-get -y dist-upgrade
-    sudo apt install -y nginx
-    EOF
-}
+# locals {
+#   custom_data = <<EOF
+#     #!/bin/bash
+#     sudo apt-get update
+#     sudo apt-get -y dist-upgrade
+#     sudo apt install -y nginx
+#     EOF
+# }
 
 resource "azurerm_linux_virtual_machine" "example" {
   name                = "example-machine"
@@ -112,6 +112,8 @@ resource "azurerm_linux_virtual_machine" "example" {
 
   disable_password_authentication = false
 
+  custom_data = filebase64("customdata.tpl")
+
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
@@ -124,5 +126,5 @@ resource "azurerm_linux_virtual_machine" "example" {
     version   = "latest"
   }
 
-  custom_data = base64encode(local.custom_data)
+  # custom_data = base64encode(local.custom_data)
 }
