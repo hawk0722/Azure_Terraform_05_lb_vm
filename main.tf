@@ -112,7 +112,7 @@ resource "azurerm_linux_virtual_machine" "example" {
 
   disable_password_authentication = false
 
-  custom_data = filebase64("customdata.tpl")
+  custom_data = filebase64("cloud-init.yml")
 
   os_disk {
     caching              = "ReadWrite"
